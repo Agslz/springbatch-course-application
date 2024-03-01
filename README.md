@@ -1,4 +1,4 @@
-# Spring Batch con enfoque de chunks
+# Spring Batch con enfoque de Tasklets
 
 ## Este repositorio contiene un proyecto desarrollado utilizando Spring Batch con el enfoque de tasklets. A través de este repositorio, podrás construir una aplicación que procesa datos en lotes de manera eficiente.
 
