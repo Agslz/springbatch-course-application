@@ -20,42 +20,47 @@ import java.util.List;
 
 @Slf4j
 public class ItemReaderStep implements Tasklet {
+
     @Autowired
     private ResourceLoader resourceLoader;
 
     @Override
-    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
 
-        log.info("----------> Inicio del paso de lectura <----------");
+        log.info("-------------------> Inicio del paso de lectura del archivo <-------------------");
 
-        Reader reader = new FileReader(resourceLoader.getResource("classpath:files/destination/persons.csv").getFile());
-
+        // Crear un objeto CSVReaderBuilderWithSeparator y especificar el separador como coma
+        Reader reader = new FileReader(resourceLoader.getResource("classpath:files/destino/persons.csv").getFile());
         CSVParser parser = new CSVParserBuilder()
                 .withSeparator(',')
                 .build();
-
         CSVReader csvReader = new CSVReaderBuilder(reader)
                 .withCSVParser(parser)
-                .withSkipLines(1)
+                .withSkipLines(1)   // Ignorar la primera línea como encabezado
                 .build();
 
+        // Leer cada línea del archivo CSV y convertirla a un objeto Persona
         List<Person> personList = new ArrayList<>();
-
-        String[] acutalLine;
-
-        while ((acutalLine = csvReader.readNext()) != null) {
+        String[] linea;
+        while ((linea = csvReader.readNext()) != null) {
             Person person = new Person();
-            person.setName(acutalLine[0]);
-            person.setLastName(acutalLine[1]);
-            person.setAge(Integer.parseInt(acutalLine[2]));
-
+            person.setName(linea[0]);
+            person.setLastName(linea[1]);
+            person.setAge(Integer.parseInt(linea[2]));
             personList.add(person);
         }
 
+        // Cerrar el objeto CSVReader y el archivo
         csvReader.close();
         reader.close();
 
-        log.info("----------> Fin del paso de lectura <----------");
+        chunkContext.getStepContext()
+                .getStepExecution()
+                .getJobExecution()
+                .getExecutionContext()
+                .put("personList", personList);
+
+        log.info("-------------------> Fin del paso de lectura del archivo <-------------------");
 
         return RepeatStatus.FINISHED;
     }
