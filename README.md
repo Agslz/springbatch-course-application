@@ -2,7 +2,7 @@
 
 ## Este repositorio contiene un proyecto desarrollado utilizando Spring Batch con el enfoque de tasklets. A través de este repositorio, podrás construir una aplicación que procesa datos en lotes de manera eficiente.
 
-### Esta es una serie de proyectos enfocados a Spring Batch, en este repositorio se muestra en enfoque en Tasklets pero tambien se encuentra disponible el enfoque en Chunks [aquí](https://github.com/Agslz/springbatch-chunks-app)
+### Esta es una serie de proyectos enfocados a Spring Batch, en este repositorio se muestra en enfoque en Tasklets pero tambien se encuentra disponible el enfoque en Chunks [aquí](https://github.com/Agslz/springbatch-chunk-app)
 
 ## Contenido del proyecto
 
